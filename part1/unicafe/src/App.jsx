@@ -4,24 +4,28 @@ const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button>
 
 const Statistics = ({good, neutral, bad}) => {
     const totalFeedbacks = () => good + neutral + bad;
+    const hasAnyFeedback = () => totalFeedbacks() > 0;
     const averageFeedbacks = () => {
-        const total = totalFeedbacks();
-        if (total <= 0) {
+        if (!hasAnyFeedback()) {
             return 0;
         }
-        return ((good * 1) + (neutral * 0 ) + (bad * -1)) / total;
+
+        return ((good * 1) + (neutral * 0 ) + (bad * -1)) / totalFeedbacks();
     };
     const positivePercentageFeedbacks = () => {
-        const total = totalFeedbacks();
-        if (total <= 0) {
+        if (hasAnyFeedback()) {
             return 0;
         }
-        return good / total * 100;
+
+        return good / totalFeedbacks() * 100;
+    }
+
+    if (!hasAnyFeedback()) {
+        return (<div><span>No feedback given</span></div>)
     }
 
     return (
         <div>
-            <h1>statistics</h1>
             <p>good {good}</p>
             <p>neutral {neutral}</p>
             <p>bad {bad}</p>
@@ -49,6 +53,7 @@ const App = () => {
             <Button onClick={increaseNeutralFeedback} text={'neutral'}/>
             <Button onClick={increaseBadFeedback} text={'bad'}/>
 
+            <h1>statistics</h1>
             <Statistics good={good} neutral={neutral} bad={bad}/>
         </div>
     )
