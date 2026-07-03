@@ -2,36 +2,28 @@ import {useState} from 'react'
 
 const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button>
 
+const StatisticsLine = ({text, value}) => {
+    return (<div><p>{text} {value}</p></div>)
+}
+
 const Statistics = ({good, neutral, bad}) => {
     const totalFeedbacks = () => good + neutral + bad;
-    const hasAnyFeedback = () => totalFeedbacks() > 0;
-    const averageFeedbacks = () => {
-        if (!hasAnyFeedback()) {
-            return 0;
-        }
-
-        return ((good * 1) + (neutral * 0 ) + (bad * -1)) / totalFeedbacks();
-    };
-    const positivePercentageFeedbacks = () => {
-        if (!hasAnyFeedback()) {
-            return 0;
-        }
-
-        return good / totalFeedbacks() * 100;
-    }
-
-    if (!hasAnyFeedback()) {
+    // Render if no feedback was gathered
+    if (totalFeedbacks() <= 0) {
         return (<div><span>No feedback given</span></div>)
     }
 
+    const averageFeedbacks = () => ((good * 1) + (neutral * 0) + (bad * -1)) / totalFeedbacks();
+    const positivePercentageFeedbacks = () => good / totalFeedbacks() * 100
+
     return (
         <div>
-            <p>good {good}</p>
-            <p>neutral {neutral}</p>
-            <p>bad {bad}</p>
-            <p>all {totalFeedbacks()}</p>
-            <p>average {averageFeedbacks()}</p>
-            <p>positive {positivePercentageFeedbacks()} %</p>
+            <StatisticsLine text="good" value={good}/>
+            <StatisticsLine text="neutral" value={neutral}/>
+            <StatisticsLine text="bad" value={bad}/>
+            <StatisticsLine text="all" value={totalFeedbacks()}/>
+            <StatisticsLine text="average" value={averageFeedbacks()}/>
+            <StatisticsLine text="positive" value={positivePercentageFeedbacks() + ' %'}/>
         </div>
     )
 }
