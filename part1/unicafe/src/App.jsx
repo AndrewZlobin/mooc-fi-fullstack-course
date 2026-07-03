@@ -13,7 +13,7 @@ const Statistics = ({good, neutral, bad}) => {
         return ((good * 1) + (neutral * 0 ) + (bad * -1)) / totalFeedbacks();
     };
     const positivePercentageFeedbacks = () => {
-        if (hasAnyFeedback()) {
+        if (!hasAnyFeedback()) {
             return 0;
         }
 
