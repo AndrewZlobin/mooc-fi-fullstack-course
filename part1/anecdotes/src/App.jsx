@@ -27,14 +27,25 @@ const App = () => {
     setVotes(copy);
   }
 
+  const anecdoteWithMostVotes = () => {
+    const mostVotes = Object.keys(votes).reduce((acc, curr) => {
+      return votes[acc] > votes[curr] ? acc : curr;
+    }, null);
+
+    return anecdotes[mostVotes] || '';
+  }
+
   const selectRandomAnecdote = () => setSelected(Math.floor(Math.random() * anecdotes.length));
 
   return (
       <div>
+        <h1>Anecdote of a day</h1>
         <p>{anecdotes[selected]}</p>
         <p>has {votes[selected] || 0} votes</p>
         <button onClick={() => voteForAnecdote(selected)}>vote</button>
         <button onClick={selectRandomAnecdote}>next anecdote</button>
+        <h1>Anecdote with most votes</h1>
+        <p>{anecdoteWithMostVotes()}</p>
       </div>
   )
 }
