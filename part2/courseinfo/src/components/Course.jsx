@@ -3,10 +3,10 @@ import Content from "./Content.jsx";
 import Total from "./Total.jsx";
 
 const Course = ({course}) => {
-    const {id, name, parts} = course;
+    const {name, parts} = course;
     return (
         <div>
-            <Header key={id} name={name} />
+            <Header name={name} />
             <Content parts={parts} />
             <Total parts={parts} />
         </div>
