@@ -12,6 +12,13 @@ const App = () => {
 
     const addNewPerson = (event) => {
         event.preventDefault();
+
+        const isAlreadyAddedToPhonebook = persons.some(person => person.name === newName);
+        if (isAlreadyAddedToPhonebook) {
+            alert(`${newName} is already added to phonebook`);
+            return;
+        }
+
         setPersons([
             ...persons,
             {name: newName},
