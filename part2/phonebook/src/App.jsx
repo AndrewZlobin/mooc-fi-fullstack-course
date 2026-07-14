@@ -1,4 +1,7 @@
 import {useState} from 'react'
+import Filter from "./components/Filter.jsx";
+import PersonForm from "./components/PersonForm.jsx";
+import Persons from "./components/Persons.jsx";
 
 const App = () => {
     const [persons, setPersons] = useState([
@@ -12,33 +15,6 @@ const App = () => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
 
-    const handleFilter = (event) => {
-        setFilter(event.target.value)
-    }
-
-    const handleNewName = (event) => {
-        setNewName(event.target.value)
-    }
-
-    const handleNewNumber = (event) => {
-        setNewNumber(event.target.value)
-    }
-
-    const addNewPerson = (event) => {
-        event.preventDefault()
-
-        const isAlreadyAddedToPhonebook = persons.some(person => person.name === newName)
-        if (isAlreadyAddedToPhonebook) {
-            alert(`${newName} is already added to phonebook`)
-            return
-        }
-
-        setPersons([
-            ...persons,
-            {name: newName, number: newNumber},
-        ])
-    }
-
     const filteredList = filter.length === 0
         ? persons
         : persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()));
@@ -46,25 +22,14 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
-            <div>
-                filter shown with: <input onChange={handleFilter}/>
-            </div>
-            <h3>Add new</h3>
-            <form onSubmit={addNewPerson}>
-                <div>
-                    name: <input onChange={handleNewName}/>
-                </div>
-                <div>
-                    number: <input onChange={handleNewNumber}/>
-                </div>
-                <div>
-                    <button type="submit">add</button>
-                </div>
-            </form>
+            <Filter setFilter={setFilter}/>
+            <h3>Add a new</h3>
+            <PersonForm
+                persons={persons} setPersons={setPersons}
+                newName={newName} setNewName={setNewName}
+                newNumber={newNumber} setNewNumber={setNewNumber} />
             <h2>Numbers</h2>
-            {filteredList.map(person => (
-                <p key={person.name}>{person.name} {person.number}</p>
-            ))}
+            <Persons filter={filter} persons={persons}/>
         </div>
     )
 }
