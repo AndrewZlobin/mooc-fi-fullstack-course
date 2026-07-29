@@ -1,3 +1,5 @@
+import personsService from "../services/persons.js"
+
 const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNewNumber}) => {
     const handleNewName = (event) => {
         setNewName(event.target.value)
@@ -16,9 +18,16 @@ const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNew
             return
         }
 
+        const newPerson = {
+            name: newName,
+            number: newNumber,
+        }
+
+        personsService.add(newPerson)
+
         setPersons([
             ...persons,
-            {name: newName, number: newNumber},
+            newPerson,
         ])
     }
 
