@@ -9,7 +9,12 @@ const add = (person) => {
     return axios.post(baseURL, person);
 }
 
+const remove = (id) => {
+    return axios.delete(`${baseURL}/${id}`);
+}
+
 export default {
     getAll,
     add,
+    remove
 };
