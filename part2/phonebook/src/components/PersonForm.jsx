@@ -4,7 +4,8 @@ import Notification from "./Notification.jsx";
 
 const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNewNumber}) => {
 
-    const [successMessage, setSuccessMessage] = useState(null);
+    const [message, setMessage] = useState(null);
+    const [messageType, setMessageType] = useState(null);
 
     const handleNewName = (event) => {
         setNewName(event.target.value)
@@ -28,14 +29,28 @@ const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNew
                     number: newNumber,
                 }
 
-                personsService.update(updatedPerson).then(data => {
-                    setPersons(
-                        persons.map(person => person.name === data.name ? data : person)
-                    )
+                personsService.update(updatedPerson)
+                    .then(data => {
+                        setPersons(
+                            persons.map(person => person.name === data.name ? data : person)
+                        )
 
-                    setSuccessMessage(`${newName} was changed successfully.`)
-                    setTimeout(() => setSuccessMessage(null), 5000);
-                })
+                        setMessage(`${newName} was changed successfully.`)
+                        setMessageType('success')
+                        setTimeout(() => {
+                            setMessage(null)
+                            setMessageType(null)
+                        }, 5000);
+                    })
+                    .catch(() => {
+                        setMessage(`Information of ${newName} has already been removed from server.`)
+                        setMessageType('error')
+                        setTimeout(() => {
+                            setMessage(null)
+                            setMessageType(null)
+                        }, 5000);
+                    })
+
             }
 
             return
@@ -53,13 +68,17 @@ const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNew
             newPerson,
         ])
 
-        setSuccessMessage(`${newName} added to phonebook`)
-        setTimeout(() => setSuccessMessage(null), 5000);
+        setMessage(`${newName} added to phonebook`)
+        setMessageType('success');
+        setTimeout(() => {
+            setMessage(null)
+            setMessageType(null)
+        }, 5000);
     }
 
     return (
         <div>
-            <Notification message={successMessage} />
+            <Notification message={message} type={messageType} />
             <form onSubmit={addNewPerson}>
                 <div>
                     name: <input onChange={handleNewName}/>

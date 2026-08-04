@@ -1,8 +1,11 @@
 import personsService from "../services/persons.js"
 import {useState} from "react";
+import Notification from "./Notification.jsx";
 
 const Persons = ({filter, persons}) => {
     const [removedIds, setRemovedIds] = useState([]);
+    const [message, setMessage] = useState(null);
+    const [messageType, setMessageType] = useState(null);
 
     const filteredList = persons.filter(person => {
         // Do not show removed Persons
@@ -27,16 +30,26 @@ const Persons = ({filter, persons}) => {
             return
         }
 
-        personsService.remove(id).then(() => {
-            setRemovedIds([
-                ...removedIds,
-                id,
-            ])
-        })
+        personsService.remove(id)
+            .then(() => {
+                setRemovedIds([
+                    ...removedIds,
+                    id,
+                ])
+            })
+            .catch(() => {
+                setMessage('Person has already been removed from server.')
+                setMessageType('error')
+                setTimeout(() => {
+                    setMessage(null)
+                    setMessageType(null)
+                }, 5000);
+            })
     }
 
     return (
         <div>
+            <Notification message={message} type={messageType} />
             {filteredList.map(person => (
                 <p key={person.name}>
                     <span>{person.name} {person.number}</span>
