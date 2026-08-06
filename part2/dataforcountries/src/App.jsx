@@ -18,11 +18,11 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const list = countries === null
-        ? null
-        : countries.filter(country => country.name.common.toLowerCase().includes(search.toLowerCase()))
+    const list = countries?.filter(country => {
+      return country.name.common.toLowerCase().includes(search.toLowerCase());
+    })
 
-    setList(list)
+    setList(list || null)
   }, [search]);
 
   if (countries === null) {
