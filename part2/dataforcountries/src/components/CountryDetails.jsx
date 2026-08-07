@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import countriesService from "../services/countries.js";
+import weatherService from "../services/weather.js";
+import CountryWeather from "./CountryWeather.jsx";
 
 const CountryDetails = ({list}) => {
     const [details, setDetails] = useState(null);
@@ -43,6 +45,7 @@ const CountryDetails = ({list}) => {
                     <li key={key}>{language}</li>
                 ))}
             </ul>
+            <CountryWeather details={details}/>
         </div>
     )
 }
