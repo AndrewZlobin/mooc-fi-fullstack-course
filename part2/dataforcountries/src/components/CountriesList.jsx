@@ -1,4 +1,4 @@
-const CountriesList = ({list}) => {
+const CountriesList = ({list, setSearch}) => {
     if (list === null || list.length > 10 || list.length <= 1) {
         return null;
     }
@@ -6,7 +6,10 @@ const CountriesList = ({list}) => {
     return (
         <ul>
             {list.map(country => (
-                <li key={country.name.official}>{country.name.common}</li>
+                <li key={country.name.official}>
+                    <span>{country.name.common}</span>
+                    <button onClick={() => setSearch(country.name.common)}>Show</button>
+                </li>
             ))}
         </ul>
     )

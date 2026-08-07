@@ -33,7 +33,7 @@ function App() {
     <div>
       <Search countries={countries} setSearch={setSearch}/>
       <Notification list={list}/>
-      <CountriesList list={list}/>
+      <CountriesList list={list} setSearch={setSearch}/>
       <CountryDetails list={list}/>
     </div>
   )
