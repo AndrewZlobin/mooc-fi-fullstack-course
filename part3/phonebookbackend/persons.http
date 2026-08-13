@@ -8,3 +8,8 @@ GET localhost:3001/api/persons/1
 GET localhost:3001/api/persons/-1
 ### DELETE Person by provided ID
 DELETE localhost:3001/api/persons/4
+### POST add new Person
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{"name": "John Snow", "number":  "454-676"}
