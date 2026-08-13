@@ -25,7 +25,14 @@ const persons = [
 ]
 
 app.get('/api/persons', (request, response) => {
-    response.json(persons);
+    response.json(persons)
+})
+
+app.get('/info', (request, response) => {
+    const message = `Phonebook has info for ${persons.length + 1} people`;
+    const currentDateTime = new Date().toString();
+
+    response.send(`<div><p>${message}</p><p>${currentDateTime}</p></div>`)
 })
 
 const PORT = 3001
