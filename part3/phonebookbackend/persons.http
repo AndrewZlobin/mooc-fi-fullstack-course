@@ -1,0 +1,10 @@
+### GET List of Persons
+GET localhost:3001/api/persons
+### GET info
+GET localhost:3001/info
+### GET Person by Id
+GET localhost:3001/api/persons/1
+### GET non-existing Person
+GET localhost:3001/api/persons/-1
+### DELETE Person by provided ID
+DELETE localhost:3001/api/persons/4
