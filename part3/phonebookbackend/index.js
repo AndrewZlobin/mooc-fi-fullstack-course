@@ -54,12 +54,29 @@ app.delete('/api/persons/:id', (request, response) => {
 app.post('/api/persons', (request, response) => {
     const body = request.body
 
+    const num = body.number;
+
+    if (!num) {
+        response.json({error: 'Number is required'}).end()
+    }
+
+    const name = body.name;
+
+    if (!name) {
+        response.json({error: 'Name is required'}).end()
+    }
+
+    const exists = persons.find(person => person.name === name);
+    if (!!exists) {
+        response.json({error: `Name ${name} is already exists`}).end()
+    }
+
     const id = Math.round(Math.random() * 1000)
 
     const person = {
         id: id.toString(),
-        name: body.name,
-        number: body.number,
+        name,
+        number: num,
     }
 
     persons = [
