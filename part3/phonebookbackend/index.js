@@ -57,18 +57,18 @@ app.post('/api/persons', (request, response) => {
     const num = body.number;
 
     if (!num) {
-        response.json({error: 'Number is required'}).end()
+        response.status(400).json({error: 'Number is required'}).end()
     }
 
     const name = body.name;
 
     if (!name) {
-        response.json({error: 'Name is required'}).end()
+        response.status(400).json({error: 'Name is required'}).end()
     }
 
     const exists = persons.find(person => person.name === name);
     if (!!exists) {
-        response.json({error: `Name ${name} is already exists`}).end()
+        response.status(400).json({error: `Name ${name} is already exists`}).end()
     }
 
     const id = Math.round(Math.random() * 1000)
